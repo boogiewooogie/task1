@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS university(
+id int,
+name varchar(255),
+date timestamptz,
+parent_id int
+);
+INSERT INTO university
+(id, name, date, parent_id) 
+VALUES 
+(1, 'РГУ нефти и газа И.М.Губкина г.Москва', current_timestamp, NULL), 
+(2, 'Факультет КБ ТЭК', current_timestamp, 1),
+(3, 'Факультет РНиГМ', current_timestamp, 1),
+(4, 'Факультет ИМ', current_timestamp, 1),
+(5, 'Факультет ХТиЭ', current_timestamp, 1),
+(6, 'Факультет АиВТ', current_timestamp, 1),
+(7, 'Кафедра КБ КВО', current_timestamp, 2),
+(8, 'Кафедра ПОБ ТЭК', current_timestamp, 2),
+(9, 'Кафедра УБ СС', current_timestamp, 2),
+(10, 'Кафедра БНиГС', current_timestamp, 3),
+(11, 'Кафедра МиОНиГП', current_timestamp, 4),
+(12, 'Кафедра газохимии', current_timestamp, 5),
+(13, 'Кафедра АСУ', current_timestamp, 6),
+(14, '10.05.03 Информационная безопасность автоматизированных систем', current_timestamp, 7),
+(15, '10.03.01 Информационная безопасность', current_timestamp, 7),
+(16, '40.05.01 Правовое обеспечение национальной безопасности', current_timestamp, 8),
+(17, '10.05.04 Информационно-аналитические системы безопасности', current_timestamp, 9),
+(18, '21.03.01 Нефтегазовое дело', current_timestamp, 10),
+(19, '09.06.01 Нефтегазопромысловое оборудование', current_timestamp, 11),
+(20, '18.03.01 Химическая технология', current_timestamp, 12),
+(21, '09.03.01 Автоматизированные системы обработки информации и управления', current_timestamp, 13);
