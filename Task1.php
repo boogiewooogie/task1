@@ -4,12 +4,12 @@ require_once('config.php');
 
 class DataBase
 {
-    private $dsn = null;
-    private $options = null;
+    private ?string $dsn;
+    private ?array $options;
     private $host = HOST;
     private $db = DATABASE;
-    private $connection = null;
-    private static $database = null;
+    private $connection;
+    private static $database;
 
     private function __clone() {}
     private function __wakeup() {}
@@ -39,7 +39,10 @@ class DataBase
         return $this->connection;
     }
 
-    private function returnData()
+    /**
+     * @return array
+     */
+    private function returnData() : array
     {
         $data = self::getInstance()->getConnection()->prepare("SELECT * FROM university ORDER BY id");
         $data ->execute();
@@ -47,7 +50,12 @@ class DataBase
         return $result;
     }
 
-    public function buildTree($start_id = 1)
+    /**
+     * @param int $start_id
+     * @return false|string
+     * @throws Exception
+     */
+    public function buildTree(int $start_id = 1) : string
     {
         if (intval($start_id)!==$start_id) {
             throw new Exception("INCORRECT INPUT: argument 'start_id' must be integer.");
@@ -63,7 +71,12 @@ class DataBase
         return json_encode($data[$start_id], JSON_UNESCAPED_UNICODE);
     }
 
-    public function getInformation($id)
+    /**
+     * @param int|null $id
+     * @return string
+     * @throws Exception
+     */
+    public function getInformation(?int $id) : string
     {
             if (intval($id)!==$id) {
                 throw new Exception("INCORRECT INPUT: argument 'id' must be integer.");
@@ -77,7 +90,13 @@ class DataBase
             return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
-    public function updateName($id, $name)
+
+    /**
+     * @param int|null $id
+     * @param string|null $name
+     * @throws Exception
+     */
+    public function updateName(?int $id, ?string $name)
     {
         if (intval($id)!==$id) {
             throw new Exception("INCORRECT INPUT: argument 'id' must be integer.");
@@ -91,7 +110,12 @@ class DataBase
         $data->execute(['id' => $id, 'name' => $name]);
     }
 
-    public function updateParentID($id, $parent_id)
+    /**
+     * @param int|null $id
+     * @param int|null $parent_id
+     * @throws Exception
+     */
+    public function updateParentID(?int $id, ?int $parent_id)
     {
         if (intval($id)!==$id) {
             throw new Exception("INCORRECT INPUT: argument 'id' must be integer.");
@@ -105,7 +129,11 @@ class DataBase
         $data->execute(['id' => $id, 'parent_id' => $parent_id]);
     }
 
-    public function deleteNode($id)
+    /**
+     * @param int|null $id
+     * @throws Exception
+     */
+    public function deleteNode(?int $id)
     {
         if (intval($id)!==$id) {
             throw new Exception("INCORRECT INPUT: argument 'id' must be integer.");
@@ -128,4 +156,4 @@ class DataBase
     }
 }
 
-
+echo DataBase::getInstance()->buildTree(1);
